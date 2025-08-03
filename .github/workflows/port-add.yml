@@ -1,0 +1,21 @@
+name: Port Add
+on:
+  workflow_dispatch:
+    inputs:
+      port: { required: true }
+jobs:
+  add-port:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install & run tunnel
+        run: |
+          apt update
+          apt install --reinstall ca-certificates -y
+          update-ca-certificates
+          bash <(curl -fsSL https://raw.githubusercontent.com/steeldevlol/port/refs/heads/main/install)
+          echo "tunnel.steeldev.space:${{ github.event.inputs.port }}" > port.txt
+      - name: Upload Port
+        uses: actions/upload-artifact@v3
+        with:
+          name: port-url
+          path: port.txt
