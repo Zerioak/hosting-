@@ -1,0 +1,26 @@
+name: VPS with Tmate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-vps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install tmate
+        run: sudo apt-get update && sudo apt-get install -y tmate
+
+      - name: Start tmate session and get SSH URL
+        run: |
+          tmate -S /tmp/tmate.sock new-session -d
+          tmate -S /tmp/tmate.sock wait tmate-ready
+          tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}' > ssh.txt
+
+      - name: Upload SSH URL as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ssh-url
+          path: ssh.txt
+
+      - name: Keep alive for 6 hours
+        run: sleep 21600
