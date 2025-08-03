@@ -1,0 +1,24 @@
+name: Custom Deploy VPS
+on:
+  workflow_dispatch:
+    inputs:
+      ram: { required: true }
+      disk: { required: true }
+      cpu: { required: true }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install tmate
+        run: sudo apt update && sudo apt install -y tmate
+      - name: Start tmate & save SSH (fake uses inputs)
+        run: |
+          echo "RAM: ${{ github.event.inputs.ram }}MB, Disk: ${{ github.event.inputs.disk }}MB, CPU: ${{ github.event.inputs.cpu }}"
+          tmate -S /tmp/tmate.sock new-session -d
+          tmate -S /tmp/tmate.sock wait tmate-ready
+          tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}' > ssh.txt
+      - name: Upload SSH
+        uses: actions/upload-artifact@v3
+        with:
+          name: ssh-url
+          path: ssh.txt
