@@ -1,0 +1,8 @@
+name: Delete All VPS
+on: workflow_dispatch
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deleting all
+        run: echo "Deleting all VPS..."
