@@ -1,0 +1,11 @@
+name: Restart VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy restart
+        run: echo "Restarted VPS (dummy action)"
