@@ -1,0 +1,8 @@
+name: Start VPS
+on: workflow_dispatch
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Starting VPS
+        run: echo "Starting VPS..."
