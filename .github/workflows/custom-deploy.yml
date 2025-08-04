@@ -29,3 +29,6 @@ jobs:
         with:
           name: ssh-url-custom
           path: ssh.txt
+
+      - name: Keep alive for 6 hours
+        run: sleep 21600
