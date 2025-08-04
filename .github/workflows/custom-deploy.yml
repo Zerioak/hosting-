@@ -25,7 +25,7 @@ jobs:
           tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}' > ssh.txt
 
       - name: Upload SSH
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ssh-url-custom
           path: ssh.txt
