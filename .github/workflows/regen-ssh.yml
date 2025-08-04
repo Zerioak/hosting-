@@ -1,0 +1,22 @@
+name: Regen SSH
+on:
+  workflow_dispatch:
+jobs:
+  regen-ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          sudo apt update
+          sudo apt install -y openssh-server
+      - name: Generate new SSH key
+        run: |
+          ssh-keygen -t rsa -b 4096 -f ssh-key -N ""
+      - name: Save SSH
+        run: |
+          echo "ssh-rsa AAAAB3... your new public key here" > ssh.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ssh-url
+          path: ssh.txt
